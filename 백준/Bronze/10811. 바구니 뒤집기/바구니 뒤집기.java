@@ -18,7 +18,6 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        List<Integer> copy = new ArrayList<>();
 
         arr = new int[N];
         for (int i = 0; i < N; i++) {
@@ -29,13 +28,13 @@ public class Main {
             st = new StringTokenizer(br.readLine());
             int I = Integer.parseInt(st.nextToken()) - 1;
             int J = Integer.parseInt(st.nextToken()) - 1;
-            int K = 0;
-            copy.clear();
-            for (int j = J; j >= I; j--) {
-                copy.add(arr[j]);
-            }
-            for (int j = I; j <= J; j++) {
-                arr[j] = copy.get(K++);
+
+            while (I < J) {
+                int temp = arr[I];
+                arr[I] = arr[J];
+                arr[J] = temp;
+                I++;
+                J--;
             }
         }
         for (int i = 0; i < arr.length; i++) {
