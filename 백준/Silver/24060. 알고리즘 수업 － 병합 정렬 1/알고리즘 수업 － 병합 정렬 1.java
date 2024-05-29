@@ -6,63 +6,55 @@ public class Main {
     static int count = 0;
     static int result = -1;
 
-    public static void mergeSort(int[] A, int p, int r) {
+    public static void mergeSort(int[] A, int[] tmp, int p, int r) {
         if (p < r) {
             int q = (p + r) / 2; // q는 p와 r의 중간 지점
-            mergeSort(A, p, q);  // 전반부 정렬
-            mergeSort(A, q + 1, r);  // 후반부 정렬
-            merge(A, p, q, r);  // 병합
+            mergeSort(A, tmp, p, q);  // 전반부 정렬
+            mergeSort(A, tmp, q + 1, r);  // 후반부 정렬
+            merge(A, tmp, p, q, r);  // 병합
         }
     }
 
-    public static void merge(int[] A, int p, int q, int r) {
-        int n1 = q - p + 1;
-        int n2 = r - q;
+    public static void merge(int[] A, int[] tmp, int p, int q, int r) {
+        int i = p, j = q + 1, t = p;
 
-        int[] L = new int[n1];
-        int[] R = new int[n2];
-
-        for (int i = 0; i < n1; i++) {
-            L[i] = A[p + i];
-        }
-        for (int j = 0; j < n2; j++) {
-            R[j] = A[q + 1 + j];
-        }
-
-        int i = 0, j = 0, k = p;
-
-        while (i < n1 && j < n2) {
-            if (L[i] <= R[j]) {
-                A[k] = L[i];
+        while (i <= q && j <= r) {
+            if (A[i] <= A[j]) {
+                tmp[t] = A[i];
                 i++;
             } else {
-                A[k] = R[j];
+                tmp[t] = A[j];
                 j++;
             }
             count++;
             if (count == K) {
-                result = A[k];
+                result = tmp[t];
             }
-            k++;
+            t++;
         }
 
-        while (i < n1) {
-            A[k] = L[i];
+        while (i <= q) {
+            tmp[t] = A[i];
             i++;
             count++;
             if (count == K) {
-                result = A[k];
+                result = tmp[t];
             }
-            k++;
+            t++;
         }
-        while (j < n2) {
-            A[k] = R[j];
+
+        while (j <= r) {
+            tmp[t] = A[j];
             j++;
             count++;
             if (count == K) {
-                result = A[k];
+                result = tmp[t];
             }
-            k++;
+            t++;
+        }
+
+        for (int k = p; k <= r; k++) {
+            A[k] = tmp[k];
         }
     }
 
@@ -74,12 +66,13 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
         int[] A = new int[N];
+        int[] tmp = new int[N];
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
             A[i] = Integer.parseInt(st.nextToken());
         }
-        mergeSort(A, 0, N - 1);
+        mergeSort(A, tmp, 0, N - 1);
 
         bw.write(result + "\n");
         bw.flush();
