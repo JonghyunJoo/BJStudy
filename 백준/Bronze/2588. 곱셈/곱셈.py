@@ -1,9 +1,14 @@
-a = int(input())
-b = input()
-c = list(b)
+A = int(input())
+B = input()
 
-print(a*int(c[2]))
-print(a*int(c[1]))
-print(a*int(c[0]))
-print(a*int(b))
+a, b, c = B
 
+B = int(B)
+a = int(a)
+b = int(b)
+c = int(c)
+
+print(A * c)
+print(A * b)
+print(A * a)
+print(A * B)
