@@ -1,32 +1,30 @@
-from collections import defaultdict
+import sys
+input = sys.stdin.read
+data = input().split()
 
-S = input().strip()
+S = data[0]
+n = len(S)
 
-q = int(input().strip())
+q = int(data[1])
 
-queries = []
+prefix_sum = [[0] * (n + 1) for _ in range(26)]
 
+for i in range(n):
+    char_index = ord(S[i]) - ord('a')
+    for j in range(26):
+        prefix_sum[j][i + 1] = prefix_sum[j][i] + (1 if j == char_index else 0)
+
+results = []
+
+index = 2
 for _ in range(q):
-    query = input().strip().split()
-    alpha = query[0]
-    l = int(query[1])
-    r = int(query[2])
-    queries.append((alpha, l, r))
+    alpha = data[index]
+    l = int(data[index + 1])
+    r = int(data[index + 2])
+    index += 3
+    
+    alpha_index = ord(alpha) - ord('a')
+    count = prefix_sum[alpha_index][r + 1] - prefix_sum[alpha_index][l]
+    results.append(str(count))
 
-alpha_index = defaultdict(list)
-
-for i in range(len(S)):
-    alpha_index[S[i]].append(i)
-
-for query in queries:
-    alpha = query[0]
-    l = query[1]
-    r = query[2]
-    indices = alpha_index[alpha]
-
-    cnt = 0
-    for index in indices:
-        if l <= index <= r:
-            cnt += 1
-
-    print(cnt)
+sys.stdout.write("\n".join(results) + "\n")
