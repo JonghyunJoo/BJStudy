@@ -1,18 +1,15 @@
-N, K = map(int, input().strip().split())
+N, K = map(int, input().split())
+coins = []
+for _ in range(N):
+    coins.append(int(input()))
 
-A = []
-for i in range(N):
-    worth = int(input())
-    if worth > K:
-        break
-    else:
-        A.append(worth)
-A.sort(reverse=True)
-cnt = 0
-for worth in A:
-    cnt += K // worth
-    K %= worth
+coins.reverse()
+
+count = 0
+for coin in coins:
     if K == 0:
         break
+    count += K // coin
+    K %= coin
 
-print(cnt)
+print(count)
