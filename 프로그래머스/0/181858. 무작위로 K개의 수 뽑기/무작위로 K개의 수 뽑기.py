@@ -5,6 +5,5 @@ def solution(arr, k):
             break
         elif num not in answer:
             answer.append(num)
-    if len(answer) < k:
-        answer.extend([-1] * (k-len(answer)))
-    return answer
+
+    return answer+([-1] * (k-len(answer)))
