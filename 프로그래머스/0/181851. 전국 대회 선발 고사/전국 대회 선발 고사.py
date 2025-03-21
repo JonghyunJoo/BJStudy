@@ -1,4 +1,3 @@
 def solution(rank, attendance):
-    rank_dict = {r: i for i,r in enumerate(rank) if attendance[i]}
-    sorted_dict = sorted(rank_dict.keys())
-    return rank_dict[sorted_dict[0]]*10000 + rank_dict[sorted_dict[1]]*100 + rank_dict[sorted_dict[2]]
+    sorted_rank = sorted((x, i) for i,x in enumerate(rank) if attendance[i])
+    return sorted_rank[0][1]*10000 + sorted_rank[1][1]*100 + sorted_rank[2][1]
